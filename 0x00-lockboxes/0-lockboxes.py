@@ -5,9 +5,12 @@
 def canUnlockAll(boxes):
     """ determines if all the boxes can be opened """
     check = [0]
+    a = 0
     indexes = []
-    for n in range(0, len(boxes)):
-        indexes.append(n)
+    for n in boxes:
+        indexes.append(a)
+        a += 1
+    indexes.append(a)
 
     for i in check:
         try:
@@ -16,7 +19,7 @@ def canUnlockAll(boxes):
                     check.append(j)
         except IndexError as e:
             return False
-    if sorted(check) == indexes:
+    if len(check) >= len(indexes):
         return True
     else:
         return False
