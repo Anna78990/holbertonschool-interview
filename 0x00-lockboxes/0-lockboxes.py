@@ -3,7 +3,7 @@
 
 
 def canUnlockAll(boxes):
-""" determines if all the boxes can be opened """
+    """ determines if all the boxes can be opened """
     check = [0]
 
     for i in check:
