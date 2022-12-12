@@ -7,9 +7,13 @@ def canUnlockAll(boxes):
     check = [0]
 
     for i in check:
-        for j in boxes[i]:
-            if j not in check:
-                check.append(j)
+        try:
+            for j in boxes[i]:
+                if j not in check:
+                    check.append(j)
+        except IndexError as e:
+            return False
+            
 
     if len(check) == (len(boxes)):
         return True
