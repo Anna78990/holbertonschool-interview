@@ -11,7 +11,7 @@ def canUnlockAll(boxes):
             if j not in check:
                 check.append(j)
 
-    if len(check) == (len(boxes) - 1):
+    if len(check) == (len(boxes)):
         return True
     else:
         return False
