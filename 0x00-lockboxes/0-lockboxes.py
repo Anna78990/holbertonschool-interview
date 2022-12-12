@@ -17,7 +17,7 @@ def canUnlockAll(boxes):
                 if j not in check:
                     check.append(j)
         except IndexError as e:
-            if check[-2] == indexes[-1]:
+            if sorted(check)[-2] == indexes[-1]:
                 return True
             else:
                 return False
