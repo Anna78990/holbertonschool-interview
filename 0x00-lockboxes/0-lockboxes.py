@@ -5,6 +5,9 @@
 def canUnlockAll(boxes):
     """ determines if all the boxes can be opened """
     check = [0]
+    nombre = 0
+    for n in range(0, len(boxes)):
+        nombre += 1
 
     for i in check:
         try:
@@ -13,9 +16,7 @@ def canUnlockAll(boxes):
                     check.append(j)
         except IndexError as e:
             return False
-            
-
-    if len(check) == (len(boxes)):
+    if len(check) == nombre:
         return True
     else:
         return False
