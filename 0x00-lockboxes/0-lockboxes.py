@@ -8,9 +8,8 @@ def canUnlockAll(boxes):
     a = 0
     indexes = []
     for n in boxes:
-        indexes.append(a)
+        indexes.append(boxes)
         a += 1
-    indexes.append(a)
 
     for i in check:
         try:
