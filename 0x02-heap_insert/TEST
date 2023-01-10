@@ -1,0 +1,39 @@
+#include "binary_trees.h"
+#include <stdlib.h>
+
+/**
+ * height - calculate the height of a tree
+ * @root: Pointer to the root of a branch
+ * Return: height of the tree
+ */
+
+size_t height(heap_t *root)
+{
+	size_t l = 0, r = 0;
+
+	if (*root == NULL)
+		return (0);
+
+	l = height(root->left) + 1;
+	r = height(root->right) + 1;
+
+	if (l >= r)
+		return (l);
+	else
+		return (r);
+}
+
+/**
+ * heap_insert - create a new branch
+ * @root: Pointer to the root of a branch
+ * @value: the value of new branch
+ * Return: pointer to a new node. if it failed, it return NULL
+ */
+
+heap_t *heap_insert(heap_t **root, int value)
+{
+	if (*root == NULL)
+		return (binary_tree_node(&root, value));
+	else if
+		
+}
