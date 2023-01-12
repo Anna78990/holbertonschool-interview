@@ -1,27 +1,19 @@
 #!/usr/bin/python3
-""" to solve the question of README.md """
+"""
+Solve the question of README.md
+Continue pasting the existing string and copy it again when n is
+divisible by the existing number of characters.
+"""
 
 
 def minOperations(n):
-    ctr = 0
-    divide = n - 1
-    divided = n
-
-    if n <= 1:
+    if not n or not isinstance(n, int) or n <= 1:
         return 0
-    if divide == 1:
-        return 2
-
-    while divide > 1:
-        while divided % divide != 0:
-            divide -= 1
-        if divide == 1 and ctr == 0:
-            return n
-        else:
-            ctr += (divided / divide)
-            divided = divide
-            divide -= 1
-    if divided == 2:
-        ctr += 2
-
-    return int(ctr)
+    paste, ctr = 1, 0
+    while paste != n:
+        if (n % paste) == 0:
+            cp = paste
+            ctr += 1
+        paste += cp
+        ctr += 1
+    return ctr
