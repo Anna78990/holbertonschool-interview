@@ -16,11 +16,11 @@ def validUTF8(data):
         elif (elem & 128) == 0:
             bit = 0
         elif (elem & 224) == 192:
-            bit = 3
-        elif (elem & 240) == 224:
             bit = 2
+        elif (elem & 240) == 224:
+            bit = 1
         elif (elem & 248) == 240:
-            bit = 4
+            bit = 3
         else:
             return False
 
