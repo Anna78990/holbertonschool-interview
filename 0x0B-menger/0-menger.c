@@ -1,50 +1,41 @@
 #include <math.h>
 #include <stdio.h>
 
+
 /**
- * menger - print menger sponge
- *
- * @level: level of menger sponge
- *
- * Return: nothing
- */
+* space_or_diese - check if it will be # or hole
+* @r: row
+* @c: column
+* Return: char space if is a hole overwise the char #
+*/
+char space_or_diese(int x, int y)
+{
+	while (x && y)
+	{
+		if (x % 3 == 1 && y % 3 == 1)
+			return (' ');
+		x /= 3, y /= 3;
+	}
+	return ('#');
+}
+
+/**
+* menger - draws a 2D Menger Sponge
+* @level: the level of the Menger Sponge to draw
+*/
 void menger(int level)
 {
-	int x, y, empty_y, crater, end, ptr_crt_y;
-	empty_y, empty_x = 3;
-	
-	if (level == 1)
-	{
-		printf("#");
+	int size, x, y;
+
+	if (level < 0)
 		return;
-	}
-	end = pow(3, level);
-	crater = pow(3, level - 1);
-	ptr_ctr_y = crater + 1;
-	for (y = 1; y <= end; y++)
+
+	size = (int)pow(3, level);
+
+	for (y = 0; y < size; y++)
 	{
-		if ((y - 1) == crator)
-			ptr_crt_y = 0;
-		if (((y - 4) == 0) || ((y - 4) % 9 == 0))
-			empty_y = 0;
-		for (x = 1; x <= end; x++)
-		{
-			if ((ptr_crt_y <= crater) && (x == crater +1))
-			{
-				while (x <= (crater * 2))
-				{
-					printf(" ");
-					x++;
-				}
-			}
-			if (((y - 2) == 0) || ((y - 2) % 3 == 0))
-			{
-				
-			}
-		}
-		printf("\n");
-		ptr_ctr++;
-		empty++;
+		for (x = 0; x < size; x++)
+			putchar(space_or_diese(x, y));
+		putchar('\n');
 	}
-	
 }
