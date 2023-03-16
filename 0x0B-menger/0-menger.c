@@ -4,8 +4,8 @@
 
 /**
 * space_or_diese - check if it will be # or hole
-* @r: row
-* @c: column
+* @x: row
+* @y: column
 * Return: char space if is a hole overwise the char #
 */
 char space_or_diese(int x, int y)
