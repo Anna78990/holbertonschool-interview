@@ -3,12 +3,14 @@
 const request = require('request');
 
 function characterLoop (character, i) {
-  for (; i < character.length; i++) {
+  if (i === character.length) return;
     request(character[i], function (err, res, body) {
       if (err) console.log(err);
-      else console.log(JSON.parse(body).name);
+      else {
+        console.log(JSON.parse(body).name);
+        characterLoop(character, ++i);
+      }
     });
-  }
 }
 
 request(`https://swapi-api.hbtn.io/api/films/${process.argv[2]}/`,
