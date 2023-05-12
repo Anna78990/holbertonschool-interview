@@ -13,7 +13,7 @@ def recursion(subreddit, dic, after=""):
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     p = {"after": after}
     res = requests.get(url, headers={'User-agent': 'your bot 0.1'}, params=p)
-    if res.status_code == 404:
+    if res.status_code != 200:
         return None
     after = res.json().get("data").get("after")
     for re in res.json().get("data").get("children"):
@@ -31,7 +31,7 @@ def count_words(subreddit, word_list):
     """prints the title counts"""
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     res = requests.get(url, headers={'User-agent': 'your bot 0.1'})
-    if res.status_code == 404:
+    if res.status_code != 200:
         return None
     lower = list(map(lambda x: x.lower(), word_list))
     li = sorted(list(set(lower)))
