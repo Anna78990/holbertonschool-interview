@@ -12,7 +12,8 @@ def recursion(subreddit, dic, after=""):
     """returns the title counts"""
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     p = {"after": after}
-    res = requests.get(url, headers={'User-agent': 'your bot 0.1'}, params=p)
+    res = requests.get(url, headers={'User-agent': 'your bot 0.1'}, params=p,
+                       allow_redirects=False)
     if res.status_code != 200:
         return None
     after = res.json().get("data").get("after")
@@ -29,10 +30,6 @@ def recursion(subreddit, dic, after=""):
 
 def count_words(subreddit, word_list):
     """prints the title counts"""
-    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
-    res = requests.get(url, headers={'User-agent': 'your bot 0.1'})
-    if res.status_code != 200:
-        return None
     lower = list(map(lambda x: x.lower(), word_list))
     li = sorted(list(set(lower)))
     dup_d = dict(map(lambda x: [x, 0], li))
