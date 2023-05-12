@@ -31,8 +31,7 @@ def count_words(subreddit, word_list):
         dup_d[i] += 1
     d = dict(map(lambda x: [x, 0], li))
     recursion(subreddit, d)
-    dict_p = sorted(map(lambda x, y: [x, y], d.values(), d.keys()))
-    dict_p.sort(reverse=True)
-    for k, v in dict_p:
-        if k != 0:
-            print('{}: {}'.format(v, k * dup_d[v]))
+    
+    for k, v in d.items():
+        if v != 0:
+            print('{}: {}'.format(k, v))

@@ -1,9 +1,16 @@
 import requests
 
-subreddit= "programming"
-url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
-res = requests.get(url, headers={'User-agent': 'your bot 0.1'})
-if res.status_code == 404:
-    print("o")
-else:
-    print("ok")
+
+dic = {"a": 1, "c": 100, "d": 2, "b": 100}
+dict_p = sorted(map(lambda x, y: [x, y], dic.values(), dic.keys()))
+
+print(type(dict_p))
+
+for i, a in dict_p:
+    print(i, a)
+
+print("---")
+dict_pp = dict(dict_p)
+
+for i, a in dict_pp.items():
+    print(i, a)
