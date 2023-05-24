@@ -100,10 +100,7 @@ int main(int argc, char **argv)
 	int *fst, *sec, *total;
 
 	if (argc != 3)
-	{
-		print_err();
-		exit(98);
-	}
+		return(0);
 	i = counter(argv[1]);
 	j = counter(argv[2]);
 
