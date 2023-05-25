@@ -84,6 +84,8 @@ void rec_print(int i, int *total, int br)
 		_putchar(total[i] + '0');
 	if (i > 0)
 		rec_print(i - 1, total, br);
+	if (br == 0 && i == 0)
+		_putchar('0');
 }
 
 /**
