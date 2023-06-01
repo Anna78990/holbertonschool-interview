@@ -7,6 +7,7 @@
  * @size: Size of the array
  * @start: Start index of the subtree
  * @end: End index of the subtree
+ * Return: Nothing
  */
 void sift_down(int *array, size_t size, size_t start, size_t end)
 {
@@ -42,6 +43,7 @@ void sift_down(int *array, size_t size, size_t start, size_t end)
  *             Heap sort algorithm
  * @array: Pointer to the array to be sorted
  * @size: Size of the array
+ * Return: Nothing
  */
 void heap_sort(int *array, size_t size)
 {
