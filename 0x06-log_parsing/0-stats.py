@@ -3,6 +3,14 @@ import sys
 
 
 def print_stats(file_size, status_codes):
+    """
+    Reads stdin line by line and computes metrics
+    Args:
+        file_size: file size
+        status_code: status code
+    Returns:
+        Nothing
+    """
     print("File size: {}".format(file_size))
     sorted_codes = sorted(status_codes.keys())
     for code in sorted_codes:
