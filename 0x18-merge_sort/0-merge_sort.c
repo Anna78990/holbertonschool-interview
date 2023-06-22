@@ -66,7 +66,11 @@ void merge_sort_rec(int *array, size_t begin, size_t end, int *work)
  */
 void merge_sort(int *array, size_t size)
 {
-	int *work = malloc(sizeof(int) * size);
+	int *work;
+
+	if (array == NULL || size == 0)
+		return;
+	work = (int *)malloc(sizeof(int) * size);
 
 	merge_sort_rec(array, 0, size - 1, work);
 
