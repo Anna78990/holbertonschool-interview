@@ -1,11 +1,11 @@
 #!/usr/bin/python3
+"""
+determine the fewest number of coins needed
+to meet a given amount total
+"""
 
 
 def makeChange(coins, amount):
-    """
-    determine the fewest number of coins needed
-    to meet a given amount total
-    """
     dp = [float('inf')] * (amount + 1)
     dp[0] = 0
 
