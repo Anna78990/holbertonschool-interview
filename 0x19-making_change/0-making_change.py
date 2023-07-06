@@ -6,6 +6,7 @@ to meet a given total total
 
 
 def makeChange(coins, total):
+    """ determine the fewest number of coins """
     if total <= 0:
         return 0
     dp = [float('inf')] * (total + 1)
