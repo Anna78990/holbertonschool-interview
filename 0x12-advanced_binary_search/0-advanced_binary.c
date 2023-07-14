@@ -37,27 +37,24 @@ int advanced_binary_recursive(int *array, size_t left, size_t right, int value)
 {
 	size_t mid;
 
-	if (left > right)
-		return (-1);
-
-	print_array(array, left, right);
-
 	mid = (left + right) / 2;
 
-	if (array[mid] == value)
+	if (left < right)
 	{
-		if (mid == left || array[mid - 1] != value)
+		print_array(array, left, right);
+		if (array[mid] == value && left + 1 == right)
 			return (mid);
-		else
+		else if (array[mid] < value)
+			return (advanced_binary_recursive
+					(array, mid + 1, right, value));
+		else if (array[mid] >= value)
 			return (advanced_binary_recursive
 					(array, left, mid, value));
 	}
-	else if (array[mid] < value)
-		return (advanced_binary_recursive
-				(array, mid + 1, right, value));
-	else
-		return (advanced_binary_recursive
-			(array, left, mid - 1, value));
+	print_array(array, left, right);
+	if (array[left] == value)
+		return (left);
+	return (-1);
 }
 
 /**
