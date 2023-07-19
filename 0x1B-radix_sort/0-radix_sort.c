@@ -49,7 +49,7 @@ void count_sort(int arr[], int n, int exp)
 
 /**
  * radix_sort - Sorts an array of integers in ascending order using the
- *			  LSD (Least Significant Digit) radix sort algorithm
+ *              LSD (Least Significant Digit) radix sort algorithm
  * @array: The array to be sorted
  * @size: Number of elements in @array
  */
@@ -58,6 +58,8 @@ void radix_sort(int *array, size_t size)
 	int max = get_max(array, size);
 	int exp;
 
+	if (array == NULL)
+		return;
 	for (exp = 1; max / exp > 0; exp *= 10)
 	{
 		count_sort(array, size, exp);
