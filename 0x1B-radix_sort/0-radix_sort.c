@@ -62,7 +62,6 @@ void radix_sort(int *array, size_t size)
 
 	if (array == NULL || size < 2)
 	{
-		print_array(array, size);
 		return;
 	}
 	for (exp = 1; max / exp > 0; exp *= 10)
