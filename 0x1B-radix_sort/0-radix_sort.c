@@ -31,7 +31,7 @@ void count_sort(int arr[], int n, int exp)
 	int *output;
 	int i, count[10] = {0};
 
-	output = (int *)malloc(sizeof(int) * n);
+	output = (int *)calloc(sizeof(int), n);
 	for (i = 0; i < n; i++)
 		count[(arr[i] / exp) % 10]++;
 
