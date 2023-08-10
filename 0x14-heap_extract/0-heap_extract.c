@@ -38,32 +38,30 @@ void heapify_down(heap_t *root)
 }
 
 /**
- * get_last_node - Returns the last node in the last level-order position
- * @root: Pointer to the root node of the binary tree
- *
- * Return: Pointer to the last node, or NULL if the tree is empty
+ * get_last_node - get the last node in heap_min
+ * @root: head of the heap tree
+ * Return: last node in heap_min
  */
-binary_tree_t *get_last_node(const binary_tree_t *root)
+binary_tree_t *get_last_node(heap_t *root)
 {
-	binary_tree_t *queue[1024] = {NULL};
-	size_t front = 0, rear = 0;
-	binary_tree_t *curr = NULL;
+	int nodes = 0, size_heap = 0;
+	binary_tree_t *last_node = NULL;
 
-	if (root == NULL)
-		return (NULL);
+	size_heap = binary_tree_size(root);
 
-	queue[rear++] = (binary_tree_t *)root;
+	for (nodes = 1; nodes <= size_heap; nodes <<= 1)
+		;
+	nodes >>= 2;
 
-	while (front < rear)
+	for (last_node = root; nodes > 0; nodes >>= 1)
 	{
-		curr = queue[front++];
-		if (curr->left != NULL)
-			queue[rear++] = curr->left;
-		if (curr->right != NULL)
-			queue[rear++] = curr->right;
+		if (size_heap & nodes)
+			last_node = last_node->right;
+		else
+			last_node = last_node->left;
 	}
 
-	return (curr);
+	return (last_node);
 }
 
 /**
@@ -93,7 +91,7 @@ int heap_extract(heap_t **root)
 		last->parent->left = NULL;
 	else
 		last->parent->right = NULL;
-
+	}
 	tmp = *root;
 	*root = last;
 	(*root)->left = tmp->left;

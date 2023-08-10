@@ -42,7 +42,7 @@ int advanced_binary_recursive(int *array, size_t left, size_t right, int value)
 	if (left < right)
 	{
 		print_array(array, left, right);
-		if (array[mid] == value && left + 1 == right)
+		if (array[mid] == value)
 			return (mid);
 		else if (array[mid] < value)
 			return (advanced_binary_recursive
