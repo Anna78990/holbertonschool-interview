@@ -61,7 +61,7 @@ void addSandpile(int matrix[3][3], int matrix2[3][3])
 void dropSand(int matrix[3][3])
 {
 	int i, j;
-	int toppled[3][3] = {0};
+	int toppled[3][3] = {{0}};
 
 	for (i = 0; i < 3; i++)
 	{
