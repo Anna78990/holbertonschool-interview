@@ -2,63 +2,88 @@
 #include "sandpiles.h"
 
 /**
- * print_grid - Print 3x3 grid
- * @grid: 3x3 grid
+ * isStable - check if the given grid is stable or not
+ * @matrix: matrix forming the grid
+ *
+ * Return: 0 on failure, 1 on success
  */
-static void print_grid(int grid[3][3])
+int isStable(int matrix[3][3])
 {
-    int i, j;
+	int i, j;
 
-    for (i = 0; i < 3; i++)
-    {
-        for (j = 0; j < 3; j++)
-        {
-            if (j)
-                printf(" ");
-            printf("%d", grid[i][j]);
-        }
-        printf("\n");
-    }
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			if (matrix[i][j] >= 4)
+				return (0);
+		}
+	}
+	return (1);
 }
 
 /**
- * toppling - Perform toppling operation on a cell
- * @grid: 3x3 grid
- * @row: row index
- * @col: column index
+ * printMatrix - print the given grid
+ * @matrix: matrix forming the grid
  */
-static void toppling(int grid[3][3], int row, int col)
+void printMatrix(int matrix[3][3])
 {
-    grid[row][col] -= 4;
-    if (row - 1 >= 0)
-        grid[row - 1][col]++;
-    if (row + 1 < 3)
-        grid[row + 1][col]++;
-    if (col - 1 >= 0)
-        grid[row][col - 1]++;
-    if (col + 1 < 3)
-        grid[row][col + 1]++;
+	int i, j;
+
+	printf("=\n");
+
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 3; j++)
+			printf("%d ", matrix[i][j]);
+		printf("\n");
+	}
 }
 
 /**
- * is_stable - Check if the sandpile is stable
- * @grid: 3x3 grid
- * Return: 1 if stable, 0 otherwise
+ * addSandpile - add the sandpiles of matrix2 to matrix1
+ * @matrix: matrix forming the grid
+ * @matrix2: matrix forming the grid2
  */
-static int is_stable(int grid[3][3])
+void addSandpile(int matrix[3][3], int matrix2[3][3])
 {
-    int i, j;
+	size_t i, j;
 
-    for (i = 0; i < 3; i++)
-    {
-        for (j = 0; j < 3; j++)
-        {
-            if (grid[i][j] > 3)
-                return 0;
-        }
-    }
-    return 1;
+	for (i = 0; i < 3; i++)
+		for (j = 0; j < 3; j++)
+			matrix[i][j] += matrix2[i][j];
 }
+
+/**
+ * dropSand - topopling the sandpiles
+ * @matrix: matrix forming the grid
+ */
+void dropSand(int matrix[3][3])
+{
+	int toppled[3][3] = {0};
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			if (matrix[i][j] >= 4)
+			{
+				matrix[i][j] -= 4;
+
+				if (i > 0)
+					toppled[i - 1][j] += 1;
+				if (i < 3 - 1)
+					toppled[i + 1][j] += 1;
+				if (j > 0)
+					toppled[i][j - 1] += 1;
+				if (j < 3 - 1)
+					toppled[i][j + 1] += 1;
+			}
+		}
+	}
+	addSandpile(matrix, toppled);
+}
+
 
 /**
  * sandpiles_sum - Compute the sum of two sandpiles
@@ -67,44 +92,11 @@ static int is_stable(int grid[3][3])
  */
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
-    int temp_grid[3][3];
-    int i, j;
+	addSandpile(grid1, grid2);
 
-    // Step 1: Add the two grids together and store the result in a temporary grid
-    for (i = 0; i < 3; i++)
-    {
-        for (j = 0; j < 3; j++)
-        {
-            temp_grid[i][j] = grid1[i][j] + grid2[i][j];
-        }
-    }
-
-    // Step 2: Check if the temporary grid is stable, if not, perform toppling operations
-    while (!is_stable(temp_grid))
-    {
-        printf("=\n");
-        print_grid(grid1);
-        printf("\n");
-
-        // Perform toppling operation on unstable cells
-        for (i = 0; i < 3; i++)
-        {
-            for (j = 0; j < 3; j++)
-            {
-                if (temp_grid[i][j] > 3)
-                    toppling(temp_grid, i, j);
-            }
-        }
-
-        // Assign the values of the resulting grid back to the original grid1 sandpile
-        for (i = 0; i < 3; i++)
-        {
-            for (j = 0; j < 3; j++)
-            {
-                grid1[i][j] = temp_grid[i][j];
-            }
-        }
-    }
-
-    printf("=\n");
+	while (!isStable(grid1))
+	{
+		printMatrix(grid1);
+		dropSand(grid1);
+	}
 }
