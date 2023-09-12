@@ -34,8 +34,10 @@ void printMatrix(int matrix[3][3])
 
 	for (i = 0; i < 3; i++)
 	{
+		if (j != 0)
+			printf(" ");
 		for (j = 0; j < 3; j++)
-			printf("%d ", matrix[i][j]);
+			printf("%d", matrix[i][j]);
 		printf("\n");
 	}
 }
