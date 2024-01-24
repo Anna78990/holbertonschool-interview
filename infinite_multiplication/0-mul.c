@@ -1,139 +1,101 @@
+#include "holberton.h"
+#include <stdio.h>
 #include <stdlib.h>
-#include "mul.h"
-
 
 /**
- * print_err - print "Error"
- *
- * Return: always nothing
+ * _print - prints a string of chars, ignoring the first 0s
+ * @str: pointer to the string to print
  */
-void print_err(void)
+void _print(char *str)
 {
-	int i;
-	char *err = "Error";
-
-	for (i = 0; i < 5; i++)
-		_putchar(err[i]);
+	while (*str == '0')
+		str++;
+	if (!*str)
+		_putchar('0');
+	while (*str)
+		_putchar(*str++);
 	_putchar('\n');
 }
 
-
 /**
- * counter - count length char, if it find a not number char, it fail
- *
- * @array: string to check
- *
- * Return: length on succeed, error code upon failure
+ * _len - mesure the length of a string
+ * @str: pointer to the string
+ * Return: length of the given string
  */
-int counter(char *array)
+int _len(char *str)
 {
-	int i;
+	int len;
 
-	for (i = 0; array[i]; i++)
-	{
-		if (array[i] > 57 || array[i] < 48)
-		{
-			print_err();
-			exit(98);
-		}
-	}
-	return (i);
+	for (len = 0; *str; str++)
+		len++;
+
+	return (len);
 }
 
 /**
- * update_indexes - update the other indexes
- *
- * @added: the number to be added
- * @idx: idx to update
- * @total: array containing calculation results
- *
- * Return: always nothing
+ * _multiply - rewrite the first digit of the result on carried and
+ *	       return the last digit
+ * @fst: first char
+ * @sec: second char
+ * @carried: pointer to the carried value
+ * Return: last digit of the result
  */
-
-void update_indexes(int added, int idx, int *total)
+char _multiply(char fst, char sec, int *carried)
 {
-	int v;
+	int first = fst - '0', second = sec - '0', result;
 
-	v = total[idx] + added;
-
-	if (v > 9)
+	if (first > 10 || second > 10)
 	{
-		total[idx] = v % 10;
-		update_indexes(v / 10, idx + 1, total);
-	}
-	else
-		total[idx] = v;
-}
-
-
-/**
- * rec_print - print the array recursively
- *
- * @i: index to print
- * @total: array containing calculation results
- * @br: check switch to ignore the zeros,
- *	in the case the result which start '0'
- *
- * Return: always nothing
- */
-void rec_print(int i, int *total, int br)
-{
-	if (total[i] != 0)
-		br++;
-	if (br > 0)
-		_putchar(total[i] + '0');
-	if (i > 0)
-		rec_print(i - 1, total, br);
-	if (br == 0 && i == 0)
-		_putchar('0');
-}
-
-/**
- * main - multiplies two positive numbers
- *
- * @argc: Arguments counter
- * @argv: Arguments vector
- *
- * Return: EXIT_SUCCESS upon success, error code upon failure
- */
-int main(int argc, char **argv)
-{
-	int i, j, z, culc, idx, fidx, sidx, index;
-	int *fst, *sec, *total;
-
-	if (argc != 3)
-	{
-		print_err();
+		_print("Error");
 		exit(98);
 	}
-	i = counter(argv[1]);
-	j = counter(argv[2]);
+	result = *carried + (first * second);
+	*carried = result / 10;
 
-	fst = (int *)malloc(i * sizeof(int));
-	sec = (int *)malloc(j * sizeof(int));
-	total = (int *)malloc((i + j + 1) * sizeof(int));
+	return ('0' + (result % 10));
+}
 
-	for (z = 0; z < i; z++)
-		fst[z] = argv[1][z] - 48;
-	for (z = 0; z < j; z++)
-		sec[z] = argv[2][z] - 48;
+/**
+ * main - entry point
+ * @ac: number of args
+ * @av: array of args
+ * Return: 0 on success, or 98
+ */
+int main(int ac, char *av[])
+{
+	char *fst, *sec, *result, *end, *current, product;
+	char *cur_fst, *cur_sec;
+	int len1, len2, carried, temp, first;
 
-	idx = 0;
-	for (fidx = i - 1; fidx >= 0; fidx--)
+	if (ac != 3)
 	{
-		index = idx;
-		for (sidx = j - 1; sidx >= 0; sidx--)
-		{
-			culc = fst[fidx] * sec[sidx];
-			update_indexes(culc, index, total);
-			index++;
-		}
-		idx++;
+		_print("Error");
+		exit(98);
 	}
-	rec_print(i + j, total, 0);
-	_putchar('\n');
-	free(fst);
-	free(sec);
-	free(total);
-	return (EXIT_SUCCESS);
+	fst = av[1];
+	sec = av[2];
+	len1 = _len(fst);
+	len2 = _len(sec);
+	result = malloc(sizeof(char) + len1 + len2 + 1);
+	end = result + len1 + len2;
+	*end = '\0';
+
+	for (cur_sec = sec + len2 - 1; cur_sec >= sec; cur_sec--)
+	{
+		current = end + (cur_sec - sec - len2 + 1) - 1;
+		carried = 0;
+		for (cur_fst = fst + len1 - 1; cur_fst >= fst; cur_fst--)
+		{
+			product = _multiply(*cur_fst, *cur_sec, &carried);
+			temp = (product - '0') + (first ? 0 : *current - '0');
+			carried += temp / 10;
+			*current = (temp % 10) + '0';
+			current--;
+		}
+		first = 0;
+		*current = carried + '0';
+	}
+	_print(current);
+	free(result);
+	return (0);
 }
