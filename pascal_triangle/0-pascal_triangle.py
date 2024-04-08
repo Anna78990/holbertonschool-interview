@@ -2,7 +2,6 @@
 """
 make pascal triangle of a given number
 """
-import math
 
 
 def pascal_triangle(n):
